@@ -5,4 +5,13 @@
 describe('zuora-api', function() {
   let subscriptionsStub;
   let objectStub;
+  let accessIdStub;
+  let secretKeyStub;
+  let baseUrlStub;
+
+  beforeEach(function() {
+    subscriptionsStub = sinon.stub();
+    objectStub = sinon.stub();
+
+  });
 });

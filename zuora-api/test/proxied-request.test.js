@@ -39,4 +39,9 @@ describe('proxied request', function() {
     niceStub.request.resolves({success:true});
     expect(proxiedRequest(requestOptions)).to.be.fullfilled;
   });
+
+  it('resolves a promise when there is no success property', function() {
+    niceStub.request.resolves({values:'things'});
+    expect(proxiedRequest(requestOptions)).to.become({values:'things'});
+  })
 });
