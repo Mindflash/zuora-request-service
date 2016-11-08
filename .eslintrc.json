@@ -1,0 +1,20 @@
+{
+  "extends": "mindflash",
+  "globals": {
+    "expect": true,
+    "sinon": true
+  },
+  "env": {
+    "mocha": true,
+    "node": true
+  },
+  "rules": {
+    "strict": [2, "global"],
+    "indent": [2, 2, { "SwitchCase": 1, "VariableDeclarator": 1 }],
+    "max-statements": [1, 10]
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "script"
+  }
+}
