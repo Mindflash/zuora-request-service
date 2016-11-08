@@ -22,3 +22,5 @@ node_modules
 
 gulpfile.js
 npm-debug.log
+
+index.integration.test.js
