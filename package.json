@@ -8,7 +8,9 @@
     "lint": "gulp lint",
     "lint:live": "gulp lint-watch --cont=true",
     "test:live": "mocha -R spec --recursive -w 'index.test.js'",
-    "test": "mocha 'index.test.js'",
+    "test": "npm run lint && npm run test:unit",
+    "test:unit": "mocha '*.test.js' 'zuora-api/test/*.test.js'",
+    "test:watch": "npm run test:unit -- -w",
     "test:integration": "mocha '**/*.integration.test.js'"
   },
   "repository": {

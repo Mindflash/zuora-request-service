@@ -1,6 +1,6 @@
 'use strict';
 
-const nice = require('nice-request');
+const request = require('../proxied-request');
 
 module.exports = (headers, baseUrl, id) => {
   const requestOptions = {
@@ -9,5 +9,5 @@ module.exports = (headers, baseUrl, id) => {
     metricTag: 'subscriptions-by-account'
   };
 
-  return nice.request(Object.assign(requestOptions, {headers}));
+  return request(Object.assign(requestOptions, {headers}));
 };

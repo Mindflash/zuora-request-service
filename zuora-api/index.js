@@ -2,8 +2,7 @@
 
 const isNull = require('lodash/isNull');
 const subscriptions = require('./subscriptions');
-const productRatePlan = require('./product-rate-plan');
-const products = require('./products');
+const object = require('./zuora-object-resource');
 
 
 module.exports = (apiaccesskeyid, apisecretaccesskey, baseUrl) => {
@@ -23,7 +22,6 @@ module.exports = (apiaccesskeyid, apisecretaccesskey, baseUrl) => {
 
   return {
     subscriptions: subscriptions(headers, baseUrl),
-    productRatePlan: productRatePlan(headers, baseUrl),
-    products: products(headers, baseUrl)
+    object: object(headers, baseUrl)
   };
 };

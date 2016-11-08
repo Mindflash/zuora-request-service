@@ -21,19 +21,31 @@ describe('zoura service', function() {
   });
 
   it('uses the correct url', function() {
-    const responseStub = {message: 'value', nested: [{value: 'nested value'}]};
+    const responseStub = {success: true, nested: [{value: 'nested value'}]};
     const scope = nock('https://rest.apisandbox.zuora.com/v1')
     .get('/subscriptions/accounts/1234')
     .reply(SUCCESS, responseStub);
-    
+
     return zuora.api().subscriptions.getByAccount(1234).then(res => {
       scope.done();
       expect(res).to.deep.equal(responseStub);
     });
   });
 
+  it('allows the user to interact with any zuora object', function() {
+    const responseStub = {success: true, nested: [{value: 'nested value'}]};
+    const scope = nock('https://rest.apisandbox.zuora.com/v1')
+    .get('/object/product/1234')
+    .reply(SUCCESS, responseStub);
+
+    return zuora.api().object.find('product', 1234).then(res => {
+      scope.done();
+      expect(res).to.deep.equal(responseStub);
+    });
+  })
+
   it('adds authorization headers to the request', function() {
-    const responseStub = {message: 'value', nested: [{value: 'nested value'}]};
+    const responseStub = {success: true, nested: [{value: 'nested value'}]};
     const scope = nock('https://rest.apisandbox.zuora.com/v1', {
       reqheaders: {
         apiaccesskeyid: 'someKeyId',
@@ -45,6 +57,19 @@ describe('zoura service', function() {
     .reply(SUCCESS, responseStub);
 
     return zuora.api().subscriptions.getByAccount(1234).then(res => {
+      scope.done();
+      expect(res).to.deep.equal(responseStub);
+    });
+  });
+
+  it('when success is marked false the result is thrown as an error', function() {
+    const responseStub = {success: false, nested: [{value: 'nested value'}]};
+
+    const scope = nock('https://rest.apisandbox.zuora.com/v1')
+    .get('/object/product/1234')
+    .reply(SUCCESS, responseStub);
+
+    return zuora.api().object.find('product', 1234).catch(res => {
       scope.done();
       expect(res).to.deep.equal(responseStub);
     });
