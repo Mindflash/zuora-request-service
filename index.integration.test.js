@@ -25,7 +25,7 @@ describe('zoura service', function() {
     const scope = nock('https://rest.apisandbox.zuora.com/v1')
     .get('/subscriptions/accounts/1234')
     .reply(SUCCESS, responseStub);
-
+    
     return zuora.api().subscriptions.getByAccount(1234).then(res => {
       scope.done();
       expect(res).to.deep.equal(responseStub);

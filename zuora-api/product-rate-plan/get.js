@@ -6,7 +6,7 @@ module.exports = (headers, baseUrl, id) => {
   const requestOptions = {
     url: `${baseUrl}object/product-rate-plan/${id}`,
     method: 'GET',
-    metricTag: 'get-product-rate-plan'
+    metricTag: 'product-rate-plan'
   };
 
   return nice.request(Object.assign(requestOptions, {headers}));
