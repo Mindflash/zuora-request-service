@@ -17,11 +17,11 @@ describe('zoura service', function() {
     };
     keyId = 'someKeyId';
     accessKey = 'someAccessKey';
-    zuora.setup(keyId, accessKey, loggerStub);
+    zuora.setup(keyId, accessKey, false, loggerStub);
   });
 
   afterEach(function() {
-    zuora.setup(null, null, null);
+    zuora.setup(null, null, null, null);
   });
 
   it('allows the user to interact with any zuora object', function() {

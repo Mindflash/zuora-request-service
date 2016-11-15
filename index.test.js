@@ -51,12 +51,12 @@ describe('zuora request service', function() {
     });
 
     it('calls nice.setup with the correct paramaters', function() {
-      zuora.setup(keyIdStub, accessKeyStub, logStub, isProdStub);
+      zuora.setup(keyIdStub, accessKeyStub, isProdStub, logStub);
       expect(niceStub.setup).to.have.been.calledWith('zuora-service', logStub);
     });
 
     it('calls config.setup with the correct parameters', function() {
-      zuora.setup(keyIdStub, accessKeyStub, logStub, isProdStub);
+      zuora.setup(keyIdStub, accessKeyStub, isProdStub, logStub);
       expect(configStub.setup).to.have.been.calledWith(keyIdStub, accessKeyStub, isProdStub);
     });
   });
