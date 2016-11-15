@@ -30,6 +30,9 @@ gulp.task('lint', ['enforce-quality'], () => {
   // Read all js files within routes
   return gulp.src([
     'index.js',
+    'index.test.js',
+    'zuora-config.js',
+    'zuora-config.test.js',
     'zuora-api/**',
     '!gulpfile.js',
     '!node_modules/**'
@@ -53,7 +56,7 @@ gulp.task('lint', ['enforce-quality'], () => {
  */
 gulp.task('lint-watch', ['lint'], () => {
   // ...and whenever a watched file changes
-  return gulp.watch(['index.js', 'zuora-api/**'], ['lint'], (event) => {
+  return gulp.watch(['index.js', 'index.test.js', 'zuora-config.test.js', 'zuora-api/**'], ['lint'], (event) => {
     if (event.type === 'deleted' && cache.caches.eslint) {
       // remove deleted files from cache
       delete cache.caches.eslint[event.path];

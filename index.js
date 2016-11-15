@@ -2,23 +2,11 @@
 
 const nice = require('nice-request');
 const zuoraApi = require('./zuora-api');
-
-
-let apiaccesskeyid = null;
-
-let apisecretaccesskey = null;
-
-let logger = null;
-
-let baseUrl = null;
-
+const config = require('./zoura-config');
 
 exports.setup = (keyId, accessKey, log, isProd) => {
-  apiaccesskeyid = keyId;
-  apisecretaccesskey = accessKey;
-  logger = log;
-  baseUrl = isProd === true ? 'https://rest.zuora.com/v1/' : 'https://rest.apisandbox.zuora.com/v1/';
-  nice.setup(logger, 'billing-service');
+  config.setup(keyId, accessKey, isProd);
+  nice.setup('zuora-service', log);
 };
 
-exports.api = () => zuoraApi(apiaccesskeyid, apisecretaccesskey, baseUrl);
+exports.api = () => zuoraApi;

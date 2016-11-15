@@ -4,10 +4,9 @@
   "description": "terse description goes here",
   "main": "index.js",
   "scripts": {
-    "coverage": "JUNIT_REPORT_PATH=report.xml JUNIT_REPORT_STACK=1 istanbul cover -x 'index.test.js' _mocha -- --reporter mocha-jenkins-reporter 'index.test.js'",
+    "coverage": "JUNIT_REPORT_PATH=report.xml JUNIT_REPORT_STACK=1 istanbul cover -x '*.test.js' _mocha -- --reporter mocha-jenkins-reporter '*.test.js' 'zuora-api/test/*.test.js'",
     "lint": "gulp lint",
-    "lint:live": "gulp lint-watch --cont=true",
-    "test:live": "mocha -R spec --recursive -w 'index.test.js'",
+    "lint:watch": "gulp lint-watch --cont=true",
     "test": "npm run lint && npm run test:unit",
     "test:unit": "mocha '*.test.js' 'zuora-api/test/*.test.js'",
     "test:watch": "npm run test:unit -- -w",
@@ -42,7 +41,7 @@
     "yargs": "^4.8.1"
   },
   "dependencies": {
-    "nice-request": "^1.0.1"
+    "nice-request": "^1.1.0"
   },
   "license": "MIT",
   "homepage": "https://github.com/Mindflash/zoura-request-service.git#readme",
