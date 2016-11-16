@@ -9,11 +9,10 @@
     "node": true
   },
   "rules": {
-    "strict": [2, "global"],
     "indent": [2, 2, { "SwitchCase": 1, "VariableDeclarator": 1 }],
     "max-statements": [1, 10],
-    "object-curly-newline": 0,
-    "import/no-unresolved": [2, { "commonjs": true }]
+    "import/no-unresolved": [2, { "commonjs": true }],
+    "object-curly-newline": 0
   },
   "parserOptions": {
     "ecmaVersion": 6,

@@ -37,6 +37,6 @@ describe('accounts', function() {
 
   it('summary calls proxy request with the correct paramaters', function() {
     accounts.summary(idStub);
-    expect(requestStub).to.have.been.calledWithExactly('GET', 'accounts/1234/Summary');
+    expect(requestStub).to.have.been.calledWithExactly('GET', 'accounts/1234/summary');
   });
 });

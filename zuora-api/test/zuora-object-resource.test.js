@@ -16,9 +16,7 @@ describe('zuora object resource', function() {
     idStub = 1234; // eslint-disable-line no-magic-numbers
     requestOptionsStub = {value: 'someValue'};
 
-    zuoraObject = proxyquire('../zuora-object-resource', {
-      './proxied-request': requestStub
-    });
+    zuoraObject = proxyquire('../zuora-object-resource', {'./proxied-request': requestStub});
   });
 
   it('find calls proxy request with the right params', function() {

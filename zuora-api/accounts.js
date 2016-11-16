@@ -13,6 +13,6 @@ module.exports = {
   // https://rest.zuora.com/v1/accounts/{account-key}
   update: (accountKey, requestOptions) => request('PUT', `accounts/${accountKey}`, requestOptions),
 
-  // https://rest.zuora.com/v1/accounts/{account-key}/Summary
-  summary: accountKey => request('GET', `accounts/${accountKey}/Summary`)
+  // https://rest.zuora.com/v1/accounts/{account-key}/summary
+  summary: accountKey => request('GET', `accounts/${accountKey}/summary`)
 };
