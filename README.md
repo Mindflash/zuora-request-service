@@ -5,7 +5,7 @@ This service provides several conveniences for using the zuora api:
 + Automatically append auth and content type headers to every out going request,
 + Manages all the URL's for the zuora api.
 + Intercepts errors returned from zuora as 200's and automatically rethrows them as proper errors.
-+ Configure requests to retry under specific conditions
++ Configure requests to retry under specific conditions.
 + Can handle logging your interactions out with zuora.
 + Configurable time out feature on your requests to keep your processes from hanging if zuora becomes unresponsive.
 
