@@ -1,7 +1,7 @@
 {
   "name": "zuora-request-service",
   "version": "1.0.0",
-  "description": "terse description goes here",
+  "description": "promise based package for consuming zuora rest API",
   "main": "index.js",
   "scripts": {
     "coverage": "JUNIT_REPORT_PATH=report.xml JUNIT_REPORT_STACK=1 istanbul cover -x '*.test.js' _mocha -- --reporter mocha-jenkins-reporter '*.test.js' 'zuora-api/test/*.test.js'",
