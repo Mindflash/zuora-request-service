@@ -14,7 +14,17 @@ const isObject = require('lodash/isObject');
  * @return {[Object]}                suitable object for making http requests from nice-request
  */
 const mergeOptions = (requestOptions, extraOptions) => {
-  const result = isObject(extraOptions) ? Object.assign(requestOptions, extraOptions) : requestOptions;
+  const result = isObject(extraOptions)
+    ? Object.assign(requestOptions, extraOptions)
+    : requestOptions;
+
+  // Munge in default retry options if none are provided
+  if (_.isNil(result.errCond) && _.isNil(result.maxTries)) {
+    Object.assign(result, {
+      maxTries: 3,
+      errCond: error => error.status !== 200,
+    });
+  }
 
   return result;
 };
@@ -29,14 +39,20 @@ const mergeOptions = (requestOptions, extraOptions) => {
  * @return {[Promise]}             a fullfilled or rejected promise
  */
 module.exports = (method, path, extraOptions) =>
-  nice.request(mergeOptions({
-    url: `${config.baseUrl()}/${path}`,
-    method,
-    metricTag: path,
-    headers: config.headers()
-  }, extraOptions))
-  .tap(result => {
-    if (has(result, 'success') && get(result, 'success') === false) {
-      throw result;
-    }
-  });
+  nice
+    .request(
+      mergeOptions(
+        {
+          url: `${config.baseUrl()}/${path}`,
+          method,
+          metricTag: path,
+          headers: config.headers(),
+        },
+        extraOptions,
+      ),
+    )
+    .tap(result => {
+      if (has(result, 'success') && get(result, 'success') === false) {
+        throw result;
+      }
+    });
