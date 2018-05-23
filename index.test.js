@@ -10,6 +10,7 @@ describe('zuora request service', function() {
   let keyIdStub;
   let accessKeyStub;
   let logStub;
+  let defaultRequestOptionsStub;
   let isProdStub;
   let zuora;
   let configStub;
@@ -19,26 +20,27 @@ describe('zuora request service', function() {
     accessKeyStub = 'someAccessKey';
 
     niceStub = {
-      setup: sinon.spy()
+      setup: sinon.spy(),
     };
 
     configStub = {
-      setup: sinon.stub()
+      setup: sinon.stub(),
     };
 
     zouraApiStub = sinon.spy();
     logStub = 'some logger';
     isProdStub = false;
+    defaultRequestOptionsStub = 'some options';
 
     zuora = proxyquire('./index.js', {
       'nice-request': niceStub,
       './zuora-api': zouraApiStub,
-      './zoura-config': configStub
+      './zoura-config': configStub,
     });
   });
 
   afterEach(function() {
-    zuora.setup(null, null, null, null);
+    zuora.setup(null, null, null, null, null);
   });
 
   context('setup()', function() {
@@ -46,7 +48,7 @@ describe('zuora request service', function() {
       expect(zuora.setup).to.be.a('function');
     });
 
-    it('is callable and returns nothihng', function() {
+    it('is callable and returns nothing', function() {
       expect(zuora.setup()).to.be.undefined;
     });
 
@@ -56,8 +58,19 @@ describe('zuora request service', function() {
     });
 
     it('calls config.setup with the correct parameters', function() {
-      zuora.setup(keyIdStub, accessKeyStub, isProdStub, logStub);
-      expect(configStub.setup).to.have.been.calledWith(keyIdStub, accessKeyStub, isProdStub);
+      zuora.setup(
+        keyIdStub,
+        accessKeyStub,
+        isProdStub,
+        logStub,
+        defaultRequestOptionsStub,
+      );
+      expect(configStub.setup).to.have.been.calledWith(
+        keyIdStub,
+        accessKeyStub,
+        isProdStub,
+        defaultRequestOptionsStub,
+      );
     });
   });
 

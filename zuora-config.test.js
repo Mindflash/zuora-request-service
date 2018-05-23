@@ -12,14 +12,14 @@ describe('zuora-config', function() {
     accessIdStub = 'someId';
     secretKeyStub = 'someKey';
 
-
     headersStub = {
       apiaccesskeyid: accessIdStub,
       apisecretaccesskey: secretKeyStub,
-      'content-Type': 'application/json'
+      'content-Type': 'application/json',
     };
 
     config = require('./zoura-config');
+    request = require('./proxied-request');
   });
 
   it('throws an error when apiaccesskeyid is null', function() {

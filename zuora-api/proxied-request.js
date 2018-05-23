@@ -15,16 +15,12 @@ const isObject = require('lodash/isObject');
  */
 const mergeOptions = (requestOptions, extraOptions) => {
   const result = isObject(extraOptions)
-    ? Object.assign(requestOptions, extraOptions)
+    ? Object.assign(
+        config.defaultRequestOptions(),
+        requestOptions,
+        extraOptions,
+      )
     : requestOptions;
-
-  // Munge in default retry options if none are provided
-  if (_.isNil(result.errCond) && _.isNil(result.maxTries)) {
-    Object.assign(result, {
-      maxTries: 3,
-      errCond: error => error.status !== 200,
-    });
-  }
 
   return result;
 };
