@@ -1,5 +1,3 @@
-/* eslint no-unused-expressions: 0, init-declarations: 0, prefer-arrow-callback: 0, func-names: 0, max-statements: 0, global-require: 0 */
-
 'use strict';
 
 describe('zuora-config', function() {
@@ -19,7 +17,6 @@ describe('zuora-config', function() {
     };
 
     config = require('./zoura-config');
-    request = require('./proxied-request');
   });
 
   it('throws an error when apiaccesskeyid is null', function() {

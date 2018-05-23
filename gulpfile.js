@@ -14,7 +14,7 @@ var args = require('yargs').argv;
  * @param  {[string]} fileName string representation of file path.
  * @return {[Promise]}         Promise indicating if file exists or not.
  */
-var fileExists = (fileName) => {
+var fileExists = fileName => {
   promiseFStat = bluebird.promisify(fs.stat);
   return promiseFStat(fileName);
 };
@@ -28,26 +28,35 @@ var fileExists = (fileName) => {
  */
 gulp.task('lint', ['enforce-quality'], () => {
   // Read all js files within routes
-  return gulp.src([
-    'index.js',
-    'index.test.js',
-    'zuora-config.js',
-    'zuora-config.test.js',
-    'zuora-api/**',
-    '!gulpfile.js',
-    '!node_modules/**'
-    ])
-    .pipe(cache('eslint'))
-    // Only uncached and changed files past this point
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.result((result) => {
-      if (result.warningCount > 0 || result.errorCount > 0) {
-        // If a file has errors/warnings remove uncache it
-        delete cache.caches.eslint[path.resolve(result.filePath)];
-      }
-    }))
-    .pipe(gulpif(!args.cont, eslint.failAfterError()));
+  return (
+    gulp
+      .src([
+        'index.js',
+        'index.test.js',
+        'zuora-config.js',
+        'zuora-config.test.js',
+        'zuora-api/**',
+        '!gulpfile.js',
+        '!node_modules/**',
+      ])
+      .pipe(cache('eslint'))
+      // Only uncached and changed files past this point
+      .pipe(
+        eslint({
+          'comma-dangle': 'always-multiline',
+        }),
+      )
+      .pipe(eslint.format())
+      .pipe(
+        eslint.result(result => {
+          if (result.warningCount > 0 || result.errorCount > 0) {
+            // If a file has errors/warnings remove uncache it
+            delete cache.caches.eslint[path.resolve(result.filePath)];
+          }
+        }),
+      )
+      .pipe(gulpif(!args.cont, eslint.failAfterError()))
+  );
 });
 
 /**
@@ -56,12 +65,16 @@ gulp.task('lint', ['enforce-quality'], () => {
  */
 gulp.task('lint-watch', ['lint'], () => {
   // ...and whenever a watched file changes
-  return gulp.watch(['index.js', 'index.test.js', 'zuora-config.test.js', 'zuora-api/**'], ['lint'], (event) => {
-    if (event.type === 'deleted' && cache.caches.eslint) {
-      // remove deleted files from cache
-      delete cache.caches.eslint[event.path];
-    }
-  });
+  return gulp.watch(
+    ['index.js', 'index.test.js', 'zuora-config.test.js', 'zuora-api/**'],
+    ['lint'],
+    event => {
+      if (event.type === 'deleted' && cache.caches.eslint) {
+        // remove deleted files from cache
+        delete cache.caches.eslint[event.path];
+      }
+    },
+  );
 });
 
 /**
@@ -69,12 +82,15 @@ gulp.task('lint-watch', ['lint'], () => {
  * into the correct location.
  */
 gulp.task('enforce-quality', () => {
-  fileExists('.git/hooks/pre-push').then((fsStatData) => {
-    console.log('Pre-Push Hook Already Exists');
-  }).catch((fsError) => {
-    return gulp.src('misc/pre-push-hook.sh')
-      .pipe(rename('/hooks/pre-push'))
-      .pipe(chmod(755))
-      .pipe(gulp.dest('.git'));
-  });
+  fileExists('.git/hooks/pre-push')
+    .then(fsStatData => {
+      console.log('Pre-Push Hook Already Exists');
+    })
+    .catch(fsError => {
+      return gulp
+        .src('misc/pre-push-hook.sh')
+        .pipe(rename('/hooks/pre-push'))
+        .pipe(chmod(755))
+        .pipe(gulp.dest('.git'));
+    });
 });
