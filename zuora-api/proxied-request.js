@@ -14,15 +14,8 @@ const isObject = require('lodash/isObject');
  * @return {[Object]}                suitable object for making http requests from nice-request
  */
 const mergeOptions = (requestOptions, extraOptions) => {
-  const result = isObject(extraOptions)
-    ? Object.assign(
-        config.defaultRequestOptions(),
-        requestOptions,
-        extraOptions,
-      )
-    : requestOptions;
-
-  return result;
+  let result = Object.assign(config.defaultRequestOptions(), requestOptions);
+  return isObject(extraOptions) ? Object.assign(result, extraOptions) : result;
 };
 
 /**
