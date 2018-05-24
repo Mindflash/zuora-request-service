@@ -1,6 +1,6 @@
 {
   "name": "zuora-request-service",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "promise based package for consuming zuora rest API",
   "main": "index.js",
   "scripts": {
