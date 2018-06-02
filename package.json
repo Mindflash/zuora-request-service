@@ -1,32 +1,35 @@
 {
-  "name": "project-name-goes-here",
-  "version": "1.0.0",
-  "description": "terse description goes here",
+  "name": "@headspace/zuora-request-service",
+  "version": "1.1.0",
+  "description": "A client to interact with the zuora rest api",
   "main": "index.js",
   "scripts": {
-    "coverage": "JUNIT_REPORT_PATH=report.xml JUNIT_REPORT_STACK=1 istanbul cover -x 'index.test.js' _mocha -- --reporter mocha-jenkins-reporter 'index.test.js'",
+    "coverage":
+      "JUNIT_REPORT_PATH=report.xml JUNIT_REPORT_STACK=1 istanbul cover -x '*.test.js' _mocha -- --reporter mocha-jenkins-reporter '*.test.js' 'zuora-api/test/*.test.js'",
     "lint": "gulp lint",
-    "lint:live": "gulp lint-watch --cont=true",
-    "test:live": "mocha -R spec --recursive -w 'index.test.js'",
-    "test": "mocha 'index.test.js'",
+    "lint:watch": "gulp lint-watch --cont=true",
+    "test": "npm run lint && npm run test:unit",
+    "test:unit": "mocha '*.test.js' 'zuora-api/test/*.test.js'",
+    "test:watch": "npm run test:unit -- -w",
     "test:integration": "mocha '**/*.integration.test.js'"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/BobbieBarker/nice-error.git"
+    "url": "git+ssh://git@github.com/Mindflash/zuora-request-service.git"
   },
   "devDependencies": {
     "bluebird": "^3.4.6",
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
     "eslint": "^3.9.1",
-    "eslint-config-mindflash": "git+ssh://git@github.com:Mindflash/eslint-config.git",
+    "eslint-config-mindflash":
+      "git+ssh://git@github.com:Mindflash/eslint-config.git",
     "eslint-plugin-import": "^1.10.2",
     "gulp": "^3.9.1",
     "gulp-cached": "^1.1.0",
     "gulp-chmod": "^1.3.0",
     "gulp-cli": "^1.2.1",
-    "gulp-eslint": "^3.0.1",
+    "gulp-eslint": "^4.0.2",
     "gulp-if": "^2.0.1",
     "gulp-rename": "^1.2.2",
     "istanbul": "^0.4.2",
@@ -40,10 +43,11 @@
     "yargs": "^4.8.1"
   },
   "dependencies": {
-    "nice-request": "^1.0.1"
+    "lodash": "^4.17.1",
+    "nice-request": "^1.1.0"
   },
   "license": "MIT",
-  "homepage": "https://github.com/BobbieBarker/nice-error.git#readme",
+  "homepage": "https://github.com/Mindflash/zoura-request-service.git#readme",
   "engines": {
     "node": ">=4.0.0"
   }

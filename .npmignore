@@ -22,3 +22,7 @@ node_modules
 
 gulpfile.js
 npm-debug.log
+
+index.integration.test.js
+zuora-config.test.js
+index.test.js

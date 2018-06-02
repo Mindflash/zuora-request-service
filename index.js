@@ -2,23 +2,23 @@
 
 const nice = require('nice-request');
 const zuoraApi = require('./zuora-api');
+const config = require('./zoura-config');
 
-
-let apiaccesskeyid = null;
-
-let apisecretaccesskey = null;
-
-let logger = null;
-
-let baseUrl = null;
-
-
-exports.setup = (keyId, accessKey, log, isProd) => {
-  apiaccesskeyid = keyId;
-  apisecretaccesskey = accessKey;
-  logger = log;
-  baseUrl = isProd === true ? 'https://rest.zuora.com/v1/' : 'https://rest.apisandbox.zuora.com/v1/';
-  nice.setup(logger, 'billing-service');
+/**
+ * Stores configuration information in a singleton to be used as a dependency through out the
+ * service.
+ * @param  {[string]}  keyId   zuora api access id.
+ * @param  {[string]}  accessKey zuora api access key
+ * @param  {[object]}  log      logger possessing a .info function.
+ * @param  {Boolean} isProd    boolean that indicates if service is in production environment or not.
+ */
+exports.setup = (keyId, accessKey, isProd, log, defaultRequestOptions) => {
+  config.setup(keyId, accessKey, isProd, defaultRequestOptions);
+  nice.setup('zuora-service', log);
 };
 
-exports.api = () => zuoraApi(apiaccesskeyid, apisecretaccesskey, baseUrl);
+/**
+ * api method returns object with methods for calling zuora API.
+ * @return {[object]} bject with methods for calling zuora API.
+ */
+exports.api = () => zuoraApi;
